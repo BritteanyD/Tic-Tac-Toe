@@ -1,12 +1,9 @@
-const gameObj = {
-    gameboard: []
-}
+const startButton = document.querySelector("#start");
+startButton.addEventListener("click",()=> {
+    alert("Hello");
+});
 
-const playerObj = {
-    player1: [],
-    player2: []
-}
-
-const gamePlayObj = {
-    
-}
+const resetButton = document.querySelector("#reset");
+resetButton.addEventListener("click",()=> {
+    alert("Hello");
+});
