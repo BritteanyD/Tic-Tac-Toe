@@ -22,11 +22,11 @@
     max-width: 350px;
 }
 
-.playerX {
+#player1 {
     color: #09C372;
 }
 
-.playerO {
+#player2 {
     color: #498AFB;
 }
 
