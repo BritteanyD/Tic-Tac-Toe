@@ -22,11 +22,11 @@
     max-width: 350px;
 }
 
-#player1 {
+.o-symbol {
     color: #09C372;
 }
 
-#player2 {
+.x-symbol {
     color: #498AFB;
 }
 

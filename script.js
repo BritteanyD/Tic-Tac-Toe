@@ -10,6 +10,7 @@ const boardGame = (() => {
             const col = index % 3;
             board[row][col] = currentPlayer.symbol;
             tile.textContent = currentPlayer.symbol;
+            tile.classList.add(currentPlayer.symbol === "X" ? "x-symbol" : "o-symbol");
         })
     })
 })();
