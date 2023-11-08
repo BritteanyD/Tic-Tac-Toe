@@ -11,6 +11,12 @@ const boardGame = (() => {
             board[row][col] = currentPlayer.symbol;
             tile.textContent = currentPlayer.symbol;
             tile.classList.add(currentPlayer.symbol === "X" ? "x-symbol" : "o-symbol");
+
+            currentPlayer = player1Turn ? players[0] : players[1];
+            //show who's turn it is
+            console.log(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
+            //switch turns
+            player1Turn = !player1Turn;
         })
     })
 })();
@@ -20,12 +26,13 @@ const createPlayers = (name, symbol) => {
     return { name, symbol }
 };
 
+//Global scope
+let players = [];
 let currentPlayer;
+let player1Turn = true;
 
 //Logic that will control the game flow
 const gameControl = (() => {
-    let players = [];
-    let player1Turn = true;
     let gameOver;
 
     const startButton = document.querySelector("#start");
@@ -48,4 +55,4 @@ resetButton.addEventListener("click", () => {
     alert("Hello");
 });
 
-// symbol colors, change turn message
+// change turn message
