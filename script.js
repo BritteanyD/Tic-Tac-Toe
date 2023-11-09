@@ -2,12 +2,20 @@
 const boardGame = (() => {
     let board = [[, ,], [, ,], [, ,]]
 
+    //Determine winner
+    const winningCombo = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+        [0, 4, 8], [2, 4, 6]             // Diagonals
+    ];
+
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach((tile, index) => {
         tile.addEventListener("click", () => {
-            //update board array and visual side
+            //update board array
             const row = Math.floor(index / 3);
             const col = index % 3;
+            //Checks for taken tiles, adds symbol, and shows winner
             if (!board[row][col]) {
                 board[row][col] = currentPlayer.symbol;
                 tile.textContent = currentPlayer.symbol;
@@ -57,4 +65,7 @@ resetButton.addEventListener("click", () => {
     alert("Hello");
 });
 
-// change turn message
+/*To-Do List: 
+1) determine winner/tie...hide display until press start
+2) change turn message to reflect announcements
+3) get reset button working*/
