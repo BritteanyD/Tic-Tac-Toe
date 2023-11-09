@@ -54,7 +54,11 @@ const boardGame = (() => {
                         return;
                     }
                 }
-
+                if (isTie()) {
+                    gameOver = true;
+                    console.log("It's a tie!");
+                    return;
+                }
 
                 //shows who's turn it is
                 currentPlayer = player1Turn ? players[0] : players[1];
@@ -65,6 +69,17 @@ const boardGame = (() => {
             }
         });
     });
+     // Check for a tie
+function isTie() {
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        if (!board[row][col]) {
+          return false; // There is an empty cell, so it's not a tie yet
+        }
+      }
+    }
+    return true; // All cells are filled, indicating a tie
+  }
 })();
 
 //Player logic
@@ -102,7 +117,7 @@ resetButton.addEventListener("click", () => {
 });
 
 /*To-Do List: 
-1) determine winner/tie...hide display until press start
+1) tie...hide display until press start
 2) change turn message to reflect announcements
 3) get reset button working
 4) do I need player turn at start??*/
