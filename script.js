@@ -1,8 +1,13 @@
+//Global scope
+let board = [[, ,], [, ,], [, ,]];
+let tiles = document.querySelectorAll(".tile");
+let gameOver = false;
+let players = [];
+let currentPlayer;
+let player1Turn = true;
+
 //Gameboard object with board array
 const boardGame = (() => {
-    let board = [[, ,], [, ,], [, ,]];
-    const tiles = document.querySelectorAll(".tile");
-
     tiles.forEach((tile, index) => {
         tile.addEventListener("click", () => {
             //prevents anymore moves being made when winner
@@ -69,30 +74,23 @@ const boardGame = (() => {
             }
         });
     });
-     // Check for a tie
-function isTie() {
-    for (let row = 0; row < 3; row++) {
-      for (let col = 0; col < 3; col++) {
-        if (!board[row][col]) {
-          return false; // There is an empty cell, so it's not a tie yet
+    // Check for a tie
+    function isTie() {
+        for (let row = 0; row < 3; row++) {
+            for (let col = 0; col < 3; col++) {
+                if (!board[row][col]) {
+                    return false; // There is an empty cell, so it's not a tie yet
+                }
+            }
         }
-      }
+        return true; // All cells are filled, indicating a tie
     }
-    return true; // All cells are filled, indicating a tie
-  }
 })();
 
 //Player logic
 const createPlayers = (name, symbol) => {
     return { name, symbol }
 };
-
-//Global scope
-let gameOver = false;
-let players = [];
-let currentPlayer;
-let player1Turn = true;
-
 
 //Logic that will control the start of the game
 const gameControl = (() => {
@@ -109,15 +107,33 @@ const gameControl = (() => {
         //switch turns
         player1Turn = !player1Turn;
     })
+    function resetBoard() {
+        board = [[, ,], [, ,], [, ,]];
+        // Remove symbols from tiles and reset their class 
+        tiles.forEach((tile) => {
+            tile.textContent = '';
+            tile.classList.remove('x-symbol', 'o-symbol');
+        });
+        // Reset game state 
+        gameOver = false;
+        currentPlayer = players[0];
+        player1Turn = true;
+    }
+
+    function resetPlayers() {
+        players[0].name = "";
+        players[1].name = "";
+    }
+
+    const resetButton = document.querySelector("#reset");
+    resetButton.addEventListener("click", () => {
+        resetBoard();
+        resetPlayers();
+    });
 })();
 
-const resetButton = document.querySelector("#reset");
-resetButton.addEventListener("click", () => {
-    alert("Hello");
-});
+
 
 /*To-Do List: 
-1) tie...hide display until press start
-2) change turn message to reflect announcements
-3) get reset button working
-4) do I need player turn at start??*/
+1)change turn message to reflect announcements
+2) get reset button working*/
