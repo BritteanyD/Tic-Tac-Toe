@@ -1,34 +1,70 @@
 //Gameboard object with board array
 const boardGame = (() => {
-    let board = [[, ,], [, ,], [, ,]]
-
-    //Determine winner
-    const winningCombo = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-        [0, 4, 8], [2, 4, 6]             // Diagonals
-    ];
-
+    let board = [[, ,], [, ,], [, ,]];
     const tiles = document.querySelectorAll(".tile");
+
     tiles.forEach((tile, index) => {
         tile.addEventListener("click", () => {
+            //prevents anymore moves being made when winner
+            if (gameOver) {
+                return;
+            }
+
             //update board array
             const row = Math.floor(index / 3);
             const col = index % 3;
-            //Checks for taken tiles, adds symbol, and shows winner
+
+            //Checks for taken tiles, adds symbol
             if (!board[row][col]) {
                 board[row][col] = currentPlayer.symbol;
                 tile.textContent = currentPlayer.symbol;
                 tile.classList.add(currentPlayer.symbol === "X" ? "x-symbol" : "o-symbol");
 
+                // Define the winning combinations using cell coordinates
+                const winningCombo = [
+                    // Rows
+                    [[0, 0], [0, 1], [0, 2]],
+                    [[1, 0], [1, 1], [1, 2]],
+                    [[2, 0], [2, 1], [2, 2]],
+
+                    // Columns
+                    [[0, 0], [1, 0], [2, 0]],
+                    [[0, 1], [1, 1], [2, 1]],
+                    [[0, 2], [1, 2], [2, 2]],
+
+                    // Diagonals
+                    [[0, 0], [1, 1], [2, 2]],
+                    [[0, 2], [1, 1], [2, 0]]
+                ];
+
+                // Check for a winner
+                for (const combo of winningCombo) {
+                    const [a, b, c] = combo;
+                    const [x1, y1] = a;
+                    const [x2, y2] = b;
+                    const [x3, y3] = c;
+
+                    if (
+                        board[x1][y1] === currentPlayer.symbol &&
+                        board[x2][y2] === currentPlayer.symbol &&
+                        board[x3][y3] === currentPlayer.symbol
+                    ) {
+                        gameOver = true;
+                        console.log(`${currentPlayer.name} wins!`);
+                        return;
+                    }
+                }
+
+
+                //shows who's turn it is
                 currentPlayer = player1Turn ? players[0] : players[1];
-                //show who's turn it is
+                //show who's turn it is in text
                 console.log(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
                 //switch turns
                 player1Turn = !player1Turn;
             }
-        })
-    })
+        });
+    });
 })();
 
 //Player logic
@@ -37,13 +73,14 @@ const createPlayers = (name, symbol) => {
 };
 
 //Global scope
+let gameOver = false;
 let players = [];
 let currentPlayer;
 let player1Turn = true;
 
-//Logic that will control the game flow
+
+//Logic that will control the start of the game
 const gameControl = (() => {
-    let gameOver;
 
     const startButton = document.querySelector("#start");
     startButton.addEventListener("click", () => {
@@ -51,7 +88,6 @@ const gameControl = (() => {
             createPlayers(document.querySelector("#player1").value, "X"),
             createPlayers(document.querySelector("#player2").value, "O")
         ]
-        gameOver = false;
         currentPlayer = player1Turn ? players[0] : players[1];
         //show who's turn it is
         console.log(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
@@ -68,4 +104,5 @@ resetButton.addEventListener("click", () => {
 /*To-Do List: 
 1) determine winner/tie...hide display until press start
 2) change turn message to reflect announcements
-3) get reset button working*/
+3) get reset button working
+4) do I need player turn at start??*/
