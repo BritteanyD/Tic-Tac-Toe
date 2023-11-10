@@ -75,10 +75,7 @@
     margin: 15px;
 }
 
-#start {
-    background-color: #498AFB;
-}
-
 #reset {
+    display: block;
     background-color: #b938ff;
 }

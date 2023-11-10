@@ -97,21 +97,21 @@ const createPlayers = (name, symbol) => {
 //Logic that will control the start & reset of the game
 const gameControl = (() => {
     const startButton = document.querySelector("#start");
-
-    startButton.addEventListener("click", () => {
-        players = [
-            createPlayers(document.querySelector("#player1").value, "X"),
-            createPlayers(document.querySelector("#player2").value, "O")
-        ]
-        currentPlayer = player1Turn ? players[0] : players[1];
-        //show who's turn it is in text
-        function announce(text) {
-            announcements.textContent = text;
-        }
-        announce(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
-        //switch turns
-        player1Turn = !player1Turn;
-    })
+function helper() {
+    players = [
+        createPlayers(document.querySelector("#player1").value, "X"),
+        createPlayers(document.querySelector("#player2").value, "O")
+    ]
+    currentPlayer = player1Turn ? players[0] : players[1];
+    //show who's turn it is in text
+    function announce(text) {
+        announcements.textContent = text;
+    }
+    announce(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
+    //switch turns
+    player1Turn = !player1Turn; 
+};
+helper()
 
     function resetBoard() {
         board = [[, ,], [, ,], [, ,]];
@@ -133,3 +133,7 @@ const gameControl = (() => {
         resetBoard();
     });
 })();
+
+/*1) add hover to tiles
+2) fix bugs 
+game state off- make board LOOK disabled*/ 
