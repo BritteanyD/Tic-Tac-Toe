@@ -4,13 +4,14 @@ const emptyBoard = [
   [, ,],
   [, ,]
 ];
-let board = JSON.parse(JSON.stringify(emptyBoard));
-let tiles = document.querySelectorAll('.tile');
+
+const board = JSON.parse(JSON.stringify(emptyBoard));
+const tiles = document.querySelectorAll('.tile');
 let gameOver = false;
 let players = [];
 let currentPlayer;
 let player1Turn = true;
-let announcements = document.querySelector('.announcement');
+const announcements = document.querySelector('.announcement');
 
 // Event Listeners
 const resetButton = document.querySelector('#reset');
@@ -43,12 +44,12 @@ tiles.forEach((tile, index) => {
 
 // Game Board Manipulation Functions
 const disableGameBoard = () => {
-  let box = document.querySelector('.container');
+  const box = document.querySelector('.container');
   box.classList.add('disabled');
 };
 
 const enableGameBoard = () => {
-  let box = document.querySelector('.container');
+  const box = document.querySelector('.container');
   box.classList.remove('disabled');
 };
 
@@ -148,7 +149,8 @@ const restartGame = () => {
 };
 
 const resetBoard = () => {
-  board = JSON.parse(JSON.stringify(emptyBoard));
+  board.length = 0;
+  Object.assign(board, JSON.parse(JSON.stringify(emptyBoard)));
   tiles.forEach(tile => {
     tile.textContent = '';
     tile.classList.remove('x-symbol', 'o-symbol');
