@@ -5,6 +5,7 @@ let gameOver = false;
 let players = [];
 let currentPlayer;
 let player1Turn = true;
+let announcements = document.querySelector(".announcement");
 
 //Gameboard object with board array
 const boardGame = (() => {
@@ -55,20 +56,23 @@ const boardGame = (() => {
                         board[x3][y3] === currentPlayer.symbol
                     ) {
                         gameOver = true;
-                        console.log(`${currentPlayer.name} wins!`);
+                        announce(`${currentPlayer.name} wins!`);
                         return;
                     }
                 }
                 if (isTie()) {
                     gameOver = true;
-                    console.log("It's a tie!");
+                    announce("It's a tie!");
                     return;
                 }
 
                 //shows who's turn it is
                 currentPlayer = player1Turn ? players[0] : players[1];
                 //show who's turn it is in text
-                console.log(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
+                function announce(text) {
+                    announcements.textContent = text;
+                }
+                announce(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
                 //switch turns
                 player1Turn = !player1Turn;
             }
@@ -94,19 +98,23 @@ const createPlayers = (name, symbol) => {
 
 //Logic that will control the start of the game
 const gameControl = (() => {
-
     const startButton = document.querySelector("#start");
+
     startButton.addEventListener("click", () => {
         players = [
             createPlayers(document.querySelector("#player1").value, "X"),
             createPlayers(document.querySelector("#player2").value, "O")
         ]
         currentPlayer = player1Turn ? players[0] : players[1];
-        //show who's turn it is
-        console.log(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
+        //show who's turn it is in text
+        function announce(text) {
+            announcements.textContent = text;
+        }
+        announce(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
         //switch turns
         player1Turn = !player1Turn;
     })
+
     function resetBoard() {
         board = [[, ,], [, ,], [, ,]];
         // Remove symbols from tiles and reset their class 
@@ -122,7 +130,7 @@ const gameControl = (() => {
 
     function resetPlayers() {
         document.getElementById("player1").value = "";
-        document.getElementById("player2").value = ""; 
+        document.getElementById("player2").value = "";
     }
 
     const resetButton = document.querySelector("#reset");
@@ -135,5 +143,4 @@ const gameControl = (() => {
 
 
 /*To-Do List: 
-1)change turn message to reflect announcements
-2) get reset button working*/
+1)change turn message to reflect announcements*/
