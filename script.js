@@ -7,7 +7,7 @@ let currentPlayer;
 let player1Turn = true;
 let announcements = document.querySelector(".announcement");
 
-//Gameboard object with board array
+//Game play logic 
 const boardGame = (() => {
     tiles.forEach((tile, index) => {
         tile.addEventListener("click", () => {
@@ -96,7 +96,7 @@ const createPlayers = (name, symbol) => {
     return { name, symbol }
 };
 
-//Logic that will control the start of the game
+//Logic that will control the start & reset of the game
 const gameControl = (() => {
     const startButton = document.querySelector("#start");
 
@@ -135,12 +135,9 @@ const gameControl = (() => {
 
     const resetButton = document.querySelector("#reset");
     resetButton.addEventListener("click", () => {
+        announcements = document.querySelector(".announcement");
+        announcements.textContent = "";
         resetBoard();
         resetPlayers();
     });
 })();
-
-
-
-/*To-Do List: 
-1)change turn message to reflect announcements*/
