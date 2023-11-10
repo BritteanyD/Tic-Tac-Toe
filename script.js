@@ -65,8 +65,6 @@ const boardGame = (() => {
                     announce("It's a tie!");
                     return;
                 }
-
-                //shows who's turn it is
                 currentPlayer = player1Turn ? players[0] : players[1];
                 //show who's turn it is in text
                 function announce(text) {
@@ -128,16 +126,10 @@ const gameControl = (() => {
         player1Turn = true;
     }
 
-    function resetPlayers() {
-        document.getElementById("player1").value = "";
-        document.getElementById("player2").value = "";
-    }
-
     const resetButton = document.querySelector("#reset");
     resetButton.addEventListener("click", () => {
         announcements = document.querySelector(".announcement");
         announcements.textContent = "";
         resetBoard();
-        resetPlayers();
     });
 })();
