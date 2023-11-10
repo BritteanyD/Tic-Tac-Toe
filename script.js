@@ -7,6 +7,12 @@ let currentPlayer;
 let player1Turn = true;
 let announcements = document.querySelector(".announcement");
 
+function disableGameBoard () {
+    //add class disabled to container
+  let box= document.querySelector(".container");
+  box.classList.add("disabled");
+}
+
 //Game play logic 
 const boardGame = (() => {
     tiles.forEach((tile, index) => {
@@ -56,13 +62,17 @@ const boardGame = (() => {
                         board[x3][y3] === currentPlayer.symbol
                     ) {
                         gameOver = true;
+                      
                         announce(`${currentPlayer.name} wins!`);
+                        disableGameBoard()
                         return;
                     }
                 }
                 if (isTie()) {
                     gameOver = true;
+
                     announce("It's a tie!");
+                    disableGameBoard()
                     return;
                 }
                 currentPlayer = player1Turn ? players[0] : players[1];
@@ -136,5 +146,4 @@ const gameControl = (() => {
 })();
 
 /*1) add hover to tiles
-2) fix bugs 
 game state off- make board LOOK disabled*/ 
