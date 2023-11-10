@@ -150,6 +150,3 @@ const gameControl = (() => {
         enableGameBoard();
     });
 })();
-
-/*1) add hover to tiles
-game state off- make board LOOK disabled*/ 
