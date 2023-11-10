@@ -13,6 +13,11 @@ function disableGameBoard () {
   box.classList.add("disabled");
 }
 
+function enableGameBoard () {
+  let box= document.querySelector(".container");
+  box.classList.remove("disabled");
+}
+
 //Game play logic 
 const boardGame = (() => {
     tiles.forEach((tile, index) => {
@@ -142,6 +147,7 @@ const gameControl = (() => {
         announcements.textContent = "";
         resetBoard();
         restart();
+        enableGameBoard();
     });
 })();
 
