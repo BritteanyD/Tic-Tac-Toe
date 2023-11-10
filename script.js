@@ -22,8 +22,13 @@ resetButton.addEventListener('click', () => {
   enableGameBoard();
 });
 
-tiles.forEach((tile, index) => {
-  tile.addEventListener('click', () => {
+const boardContainer = document.querySelector('.container');
+
+boardContainer.addEventListener('click', event => {
+  // Check if the clicked element is a tile
+  if (event.target.classList.contains('tile')) {
+    const tile = event.target;
+    const index = Array.from(boardContainer.children).indexOf(tile);
     const row = Math.floor(index / 3);
     const col = index % 3;
     if (!board[row][col]) {
@@ -39,7 +44,7 @@ tiles.forEach((tile, index) => {
         player1Turn = !player1Turn;
       }
     }
-  });
+  }
 });
 
 // Game Board Manipulation Functions
