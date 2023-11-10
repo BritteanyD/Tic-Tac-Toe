@@ -1,4 +1,4 @@
-// Global scope
+// DOM Elements and Global Variables
 const emptyBoard = [
   [, ,],
   [, ,],
@@ -12,6 +12,7 @@ let currentPlayer;
 let player1Turn = true;
 let announcements = document.querySelector('.announcement');
 
+// Event Listeners
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', () => {
   announcements.textContent = '';
@@ -20,6 +21,27 @@ resetButton.addEventListener('click', () => {
   enableGameBoard();
 });
 
+tiles.forEach((tile, index) => {
+  tile.addEventListener('click', () => {
+    const row = Math.floor(index / 3);
+    const col = index % 3;
+    if (!board[row][col]) {
+      board[row][col] = currentPlayer.symbol;
+      tile.textContent = currentPlayer.symbol;
+      tile.classList.add(
+        currentPlayer.symbol === 'X' ? 'x-symbol' : 'o-symbol'
+      );
+
+      if (!hasWinner() && !hasTie()) {
+        currentPlayer = player1Turn ? players[0] : players[1];
+        announce(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
+        player1Turn = !player1Turn;
+      }
+    }
+  });
+});
+
+// Game Board Manipulation Functions
 const disableGameBoard = () => {
   let box = document.querySelector('.container');
   box.classList.add('disabled');
@@ -34,6 +56,7 @@ const announce = text => {
   announcements.textContent = text;
 };
 
+// Game Logic Functions
 const hasWinner = () => {
   const winningCombo = [
     // Rows
@@ -111,6 +134,7 @@ const hasTie = () => {
   return true;
 };
 
+// Player Initialization and Game Reset
 const createPlayers = (name, symbol) => ({ name, symbol });
 
 const restartGame = () => {
@@ -133,25 +157,5 @@ const resetBoard = () => {
   currentPlayer = players[0];
   player1Turn = true;
 };
-
-tiles.forEach((tile, index) => {
-  tile.addEventListener('click', () => {
-    const row = Math.floor(index / 3);
-    const col = index % 3;
-    if (!board[row][col]) {
-      board[row][col] = currentPlayer.symbol;
-      tile.textContent = currentPlayer.symbol;
-      tile.classList.add(
-        currentPlayer.symbol === 'X' ? 'x-symbol' : 'o-symbol'
-      );
-
-      if (!hasWinner() && !hasTie()) {
-        currentPlayer = player1Turn ? players[0] : players[1];
-        announce(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
-        player1Turn = !player1Turn;
-      }
-    }
-  });
-});
 
 restartGame();
