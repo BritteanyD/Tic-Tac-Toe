@@ -30,7 +30,7 @@
     color: #498AFB;
 }
 
-.tile {
+.tile{
     border: 1px solid white;
     min-width: 100px;
     min-height: 100px;
@@ -39,6 +39,10 @@
     align-items: center;
     font-size: 50px;
     cursor: pointer;
+}
+
+.tile:hover {
+background-color: rgb(153, 45, 45);
 }
 
 .controls {
@@ -78,4 +82,9 @@
 #reset {
     display: block;
     background-color: #b938ff;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.4;
 }
