@@ -121,8 +121,8 @@ const gameControl = (() => {
     }
 
     function resetPlayers() {
-        players[0].name = "";
-        players[1].name = "";
+        document.getElementById("player1").value = "";
+        document.getElementById("player2").value = ""; 
     }
 
     const resetButton = document.querySelector("#reset");
