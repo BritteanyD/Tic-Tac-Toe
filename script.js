@@ -11,6 +11,15 @@ let currentPlayer;
 let player1Turn = true;
 let announcements = document.querySelector('.announcement');
 
+const resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', () => {
+  announcements = document.querySelector('.announcement');
+  announcements.textContent = '';
+  resetBoard();
+  restartGame();
+  enableGameBoard();
+});
+
 function disableGameBoard() {
   //add class disabled to container
   let box = document.querySelector('.container');
@@ -114,77 +123,62 @@ function hasTie() {
 }
 
 //Game play logic
-const boardGame = (() => {
-  tiles.forEach((tile, index) => {
-    tile.addEventListener('click', () => {
-      //update board array
-      const row = Math.floor(index / 3);
-      const col = index % 3;
+tiles.forEach((tile, index) => {
+  tile.addEventListener('click', () => {
+    //update board array
+    const row = Math.floor(index / 3);
+    const col = index % 3;
 
-      //Checks for taken tiles, adds symbol
-      if (!board[row][col]) {
-        board[row][col] = currentPlayer.symbol;
-        tile.textContent = currentPlayer.symbol;
-        tile.classList.add(
-          currentPlayer.symbol === 'X' ? 'x-symbol' : 'o-symbol'
-        );
+    //Checks for taken tiles, adds symbol
+    if (!board[row][col]) {
+      board[row][col] = currentPlayer.symbol;
+      tile.textContent = currentPlayer.symbol;
+      tile.classList.add(
+        currentPlayer.symbol === 'X' ? 'x-symbol' : 'o-symbol'
+      );
 
-        if (!hasWinner() && !hasTie()) {
-          currentPlayer = player1Turn ? players[0] : players[1];
-          announce(
-            `It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`
-          );
-          //switch turns
-          player1Turn = !player1Turn;
-        }
+      if (!hasWinner() && !hasTie()) {
+        currentPlayer = player1Turn ? players[0] : players[1];
+        announce(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
+        //switch turns
+        player1Turn = !player1Turn;
       }
-    });
+    }
   });
-})();
+});
 
 //Player logic
 const createPlayers = (name, symbol) => {
   return { name, symbol };
 };
 
-//Logic that will control the start & reset of the game
-const gameControl = (() => {
-  function restart() {
-    players = [
-      createPlayers(document.querySelector('#player1').value, 'X'),
-      createPlayers(document.querySelector('#player2').value, 'O')
-    ];
-    currentPlayer = player1Turn ? players[0] : players[1];
-    //show who's turn it is in text
-    announce(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
-    //switch turns
-    player1Turn = !player1Turn;
-  }
-  restart();
+function restartGame() {
+  players = [
+    createPlayers(document.querySelector('#player1').value, 'X'),
+    createPlayers(document.querySelector('#player2').value, 'O')
+  ];
+  currentPlayer = player1Turn ? players[0] : players[1];
+  //show who's turn it is in text
+  announce(`It's ${currentPlayer.name}'s turn (${currentPlayer.symbol})`);
+  //switch turns
+  player1Turn = !player1Turn;
+}
 
-  function resetBoard() {
-    board = [
-      [, ,],
-      [, ,],
-      [, ,]
-    ];
-    // Remove symbols from tiles and reset their class
-    tiles.forEach(tile => {
-      tile.textContent = '';
-      tile.classList.remove('x-symbol', 'o-symbol');
-    });
-    // Reset game state
-    gameOver = false;
-    currentPlayer = players[0];
-    player1Turn = true;
-  }
-
-  const resetButton = document.querySelector('#reset');
-  resetButton.addEventListener('click', () => {
-    announcements = document.querySelector('.announcement');
-    announcements.textContent = '';
-    resetBoard();
-    restart();
-    enableGameBoard();
+function resetBoard() {
+  board = [
+    [, ,],
+    [, ,],
+    [, ,]
+  ];
+  // Remove symbols from tiles and reset their class
+  tiles.forEach(tile => {
+    tile.textContent = '';
+    tile.classList.remove('x-symbol', 'o-symbol');
   });
-})();
+  // Reset game state
+  gameOver = false;
+  currentPlayer = players[0];
+  player1Turn = true;
+}
+
+restartGame();
