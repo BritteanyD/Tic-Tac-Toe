@@ -53,26 +53,6 @@ background-color: #aff366;
     margin-top: 1em;
 }
 
-#player2 {
-    margin-left: 20px;
-}
-
-#player1, #player2 {
-    color: white;
-    border-color: white;
-    padding: 8px;
-}
-
-.controls button {
-    color: white;
-    padding: 8px;
-    border-radius: 8px;
-    border: none;
-    font-size: 20px;
-    margin-left: 1em;
-    cursor: pointer;
-}
-
 .announcement {
     color: white;
     text-align: center;
@@ -80,8 +60,15 @@ background-color: #aff366;
 }
 
 #reset {
-    display: block;
+    display: none;
     background-color: #b938ff;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    font-size: 20px;
+    margin-left: 1em;
+    cursor: pointer;
 }
 
 .disabled {
