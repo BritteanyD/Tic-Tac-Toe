@@ -11,8 +11,8 @@ let players = [];
 let currentPlayer;
 let player1Turn = true;
 let announcements = document.querySelector(".announcement");
-let player1 = document.querySelector("#player1").textContent = "Player 1";
-let player2 = document.querySelector("#player2").textContent = "Player 2";
+let player1 = (document.querySelector("#player1").textContent = "Player 1");
+let player2 = (document.querySelector("#player2").textContent = "Player 2");
 
 function disableGameBoard() {
   //add class disabled to container
@@ -116,7 +116,7 @@ const boardGame = (() => {
         }
         if (isTie()) {
           gameOver = true;
-
+          resetButton.style.display = "block";
           announce("It's a tie!");
           disableGameBoard();
           return;
@@ -153,10 +153,7 @@ const createPlayers = (name, symbol) => {
 //Logic that will control the start & reset of the game
 const gameControl = (() => {
   function restart() {
-    players = [
-      createPlayers(player1, "X"),
-      createPlayers(player2, "O"),
-    ];
+    players = [createPlayers(player1, "X"), createPlayers(player2, "O")];
     currentPlayer = player1Turn ? players[0] : players[1]; //show who's turn it is in text
     function announce(text) {
       announcements.textContent = text;
@@ -171,12 +168,12 @@ const gameControl = (() => {
       [, ,],
       [, ,],
       [, ,],
-    ]; 
+    ];
     // Remove symbols from tiles and reset their class
     tiles.forEach((tile) => {
       tile.textContent = "";
       tile.classList.remove("x-symbol", "o-symbol");
-    }); 
+    });
     // Reset game state
     gameOver = false;
     currentPlayer = players[0];
