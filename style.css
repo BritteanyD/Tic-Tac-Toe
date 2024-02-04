@@ -75,3 +75,7 @@ background-color: #aff366;
     pointer-events: none;
     opacity: 0.4;
 }
+
+#player1, #player2 {
+    display: none;
+}

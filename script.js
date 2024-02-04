@@ -11,6 +11,8 @@ let players = [];
 let currentPlayer;
 let player1Turn = true;
 let announcements = document.querySelector(".announcement");
+let player1 = document.querySelector("#player1").textContent = "Player 1";
+let player2 = document.querySelector("#player2").textContent = "Player 2";
 
 function disableGameBoard() {
   //add class disabled to container
@@ -152,8 +154,8 @@ const createPlayers = (name, symbol) => {
 const gameControl = (() => {
   function restart() {
     players = [
-      createPlayers(document.querySelector("#player1"), "X"),
-      createPlayers(document.querySelector("#player2"), "O"),
+      createPlayers(player1, "X"),
+      createPlayers(player2, "O"),
     ];
     currentPlayer = player1Turn ? players[0] : players[1]; //show who's turn it is in text
     function announce(text) {
