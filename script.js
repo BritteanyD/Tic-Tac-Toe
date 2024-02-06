@@ -109,7 +109,7 @@ const boardGame = (() => {
           ) {
             gameOver = true;
             resetButton.style.display = "block";
-            announce(`${currentPlayer.name} wins!`);
+            announce(`${currentPlayer.symbol} wins!`);
             disableGameBoard();
             return;
           }
